@@ -21,7 +21,7 @@ fun AppNavigation() {
             Text("Tela de Avaliação Psicossocial")
         }
         composable("diario") {
-            DiarioDeHumorScreen()
+            DiarioDeHumorScreen(navController)
         }
         composable("canal") {
             // Tela de canal de escuta

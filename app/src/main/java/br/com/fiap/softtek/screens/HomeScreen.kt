@@ -37,7 +37,7 @@ fun HomeScreen(onNavigate: (String) -> Unit) {
         MenuButton("Avaliação Psicossocial") { onNavigate("avaliacao") }
         MenuButton("Diário de Humor") { onNavigate("diario") }
         MenuButton("Canal de Escuta") { onNavigate("canal") }
-        MenuButton("Progresso Pessoal") { onNavigate("graficos") }
+        MenuButton("Dashboards") { onNavigate("graficos") }
     }
 }
 

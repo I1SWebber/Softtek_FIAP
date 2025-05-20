@@ -1,8 +1,8 @@
 package br.com.fiap.menteleve.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,12 +12,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import br.com.fiap.menteleve.data.AppDatabase
+import br.com.fiap.menteleve.data.CheckIn
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
-fun DiarioDeHumorScreen() {
+fun DiarioDeHumorScreen(navController: NavController) {
     val backgroundColor = Color(0xFFB6E3B5)
     var selectedEmoji by remember { mutableStateOf("") }
     var selectedFeeling by remember { mutableStateOf("") }
@@ -25,11 +32,15 @@ fun DiarioDeHumorScreen() {
     val emojis = listOf("Triste 🙁", "Alegre 😀", "Cansado 😩", "Ansioso 😫", "Medo 😱", "Raiva 😤")
     val sentimentos = listOf("Motivado", "Cansado", "Preocupado", "Estressado", "Animado", "Satisfeito")
 
+    val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
@@ -69,17 +80,39 @@ fun DiarioDeHumorScreen() {
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+
         Button(
             onClick = {
-                // Aqui pode salvar no banco, exibir mensagem ou navegar
-                println("Emoji: $selectedEmoji | Sentimento: $selectedFeeling")
+                scope.launch {
+                    if (selectedEmoji.isNotBlank() && selectedFeeling.isNotBlank()) {
+                        val db = AppDatabase.getDatabase(context)
+                        val dao = db.checkInDao()
+                        val dataAtual = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+                        dao.inserir(
+                            CheckIn(
+                                emoji = selectedEmoji,
+                                sentimento = selectedFeeling,
+                                data = dataAtual
+                            )
+                        )
+
+                        Toast.makeText(context, "Check-in registrado!", Toast.LENGTH_SHORT).show()
+
+                        selectedEmoji = ""
+                        selectedFeeling = ""
+
+                        navController.navigate("home")
+                    } else {
+                        Toast.makeText(context, "Por favor, preencha ambos os campos!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             },
             modifier = Modifier
+                .fillMaxWidth()
                 .height(55.dp)
-                .width(300.dp)
                 .align(Alignment.CenterHorizontally),
-                colors = ButtonDefaults.buttonColors(Color(0xFF2E7D32))
-
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
         ) {
             Text("Registrar Check-in", fontSize = 16.sp, color = Color.White)
         }
