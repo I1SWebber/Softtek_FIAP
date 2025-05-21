@@ -1,4 +1,4 @@
-package br.com.fiap.menteleve.data
+package br.com.fiap.softtek.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,5 +8,5 @@ data class CheckIn(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val emoji: String,
     val sentimento: String,
-    val data: String // pode ser "2025-05-20", por exemplo
+    val data: String
 )

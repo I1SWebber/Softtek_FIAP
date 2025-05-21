@@ -6,8 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.menteleve.screens.DiarioDeHumorScreen
-import br.com.fiap.menteleve.screens.HomeScreen
+import br.com.fiap.softtek.screens.AvaliacaoScreen
+import br.com.fiap.softtek.screens.HomeScreen
+import br.com.fiap.softtek.screens.DiarioDeHumorScreen
+import br.com.fiap.softtek.screens.HistoricoScreen
 
 @Composable
 fun AppNavigation() {
@@ -18,16 +20,17 @@ fun AppNavigation() {
             HomeScreen { route -> navController.navigate(route) }
         }
         composable("avaliacao") {
-            Text("Tela de Avaliação Psicossocial")
+            AvaliacaoScreen(navController)
         }
         composable("diario") {
             DiarioDeHumorScreen(navController)
         }
-        composable("canal") {
-            // Tela de canal de escuta
-        }
         composable("graficos") {
             // Tela de progresso pessoal
         }
+        composable("historico") {
+            HistoricoScreen()
+        }
+
     }
 }

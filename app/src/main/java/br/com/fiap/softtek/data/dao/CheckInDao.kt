@@ -3,6 +3,7 @@ package br.com.fiap.menteleve.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import br.com.fiap.softtek.data.model.CheckIn
 
 @Dao
 interface CheckInDao {

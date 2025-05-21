@@ -1,4 +1,4 @@
-package br.com.fiap.menteleve.screens
+package br.com.fiap.softtek.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -18,13 +18,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.menteleve.data.AppDatabase
-import br.com.fiap.menteleve.data.CheckIn
+import br.com.fiap.softtek.api.MotivacionalApiService
+import br.com.fiap.softtek.data.model.CheckIn
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
 fun DiarioDeHumorScreen(navController: NavController) {
+
+    var showDialog by remember { mutableStateOf(false) }
+    var mensagemResposta by remember { mutableStateOf("") }
+
     val backgroundColor = Color(0xFFB6E3B5)
     var selectedEmoji by remember { mutableStateOf("") }
     var selectedFeeling by remember { mutableStateOf("") }
@@ -61,7 +66,7 @@ fun DiarioDeHumorScreen(navController: NavController) {
         Text("Escolha o seu emoji de hoje!", fontSize = 16.sp)
 
         emojis.forEach { item ->
-            OptionItem(
+            OptionItem2(
                 label = item,
                 selected = selectedEmoji == item,
                 onSelect = { selectedEmoji = item }
@@ -72,7 +77,7 @@ fun DiarioDeHumorScreen(navController: NavController) {
         Text("Como você se sente hoje?", fontSize = 16.sp)
 
         sentimentos.forEach { item ->
-            OptionItem(
+            OptionItem2(
                 label = item,
                 selected = selectedFeeling == item,
                 onSelect = { selectedFeeling = item }
@@ -97,12 +102,18 @@ fun DiarioDeHumorScreen(navController: NavController) {
                             )
                         )
 
+                        val api = MotivacionalApiService.getInstance()
+                        val resposta = api.getMensagem(selectedEmoji)
+
+                        showDialog = true
+                        mensagemResposta = resposta.mensagem
+
+
                         Toast.makeText(context, "Check-in registrado!", Toast.LENGTH_SHORT).show()
 
                         selectedEmoji = ""
                         selectedFeeling = ""
 
-                        navController.navigate("home")
                     } else {
                         Toast.makeText(context, "Por favor, preencha ambos os campos!", Toast.LENGTH_SHORT).show()
                     }
@@ -117,10 +128,28 @@ fun DiarioDeHumorScreen(navController: NavController) {
             Text("Registrar Check-in", fontSize = 16.sp, color = Color.White)
         }
     }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDialog = false
+                    navController.navigate("home")
+                }) {
+                    Text("OK")
+                }
+            },
+            title = { Text("💬") },
+            text = { Text(mensagemResposta, fontSize = 16.sp) }
+        )
+    }
+
+
 }
 
 @Composable
-fun OptionItem(label: String, selected: Boolean, onSelect: () -> Unit) {
+fun OptionItem2(label: String, selected: Boolean, onSelect: () -> Unit) {
     val backgroundColor = if (selected) Color(0xFF2E7D32) else Color.White
     val textColor = if (selected) Color.White else Color(0xFF2E7D32)
 

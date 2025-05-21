@@ -1,4 +1,4 @@
-package br.com.fiap.menteleve.screens
+package br.com.fiap.softtek.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.fiap.softtek.util.dispararNotificacaoAgora
 
 @Composable
 fun HomeScreen(onNavigate: (String) -> Unit) {
@@ -36,7 +38,7 @@ fun HomeScreen(onNavigate: (String) -> Unit) {
 
         MenuButton("Avaliação Psicossocial") { onNavigate("avaliacao") }
         MenuButton("Diário de Humor") { onNavigate("diario") }
-        MenuButton("Canal de Escuta") { onNavigate("canal") }
+        MenuButton("Histórico de Check-ins") { onNavigate("historico") }
         MenuButton("Dashboards") { onNavigate("graficos") }
     }
 }
