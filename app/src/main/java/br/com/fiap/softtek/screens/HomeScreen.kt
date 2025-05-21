@@ -40,6 +40,7 @@ fun HomeScreen(onNavigate: (String) -> Unit) {
         MenuButton("Diário de Humor") { onNavigate("diario") }
         MenuButton("Histórico de Check-ins") { onNavigate("historico") }
         MenuButton("Dashboards") { onNavigate("graficos") }
+        MenuButton("Recursos de Apoio") { onNavigate("canal") }
     }
 }
 

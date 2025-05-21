@@ -1,5 +1,5 @@
 // OptionItem.kt
-package br.com.fiap.softtek.screens
+package br.com.fiap.softtek.screens.util
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

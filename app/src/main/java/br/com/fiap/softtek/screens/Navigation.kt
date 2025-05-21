@@ -7,9 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.softtek.screens.AvaliacaoScreen
+import br.com.fiap.softtek.screens.DashboardScreen
 import br.com.fiap.softtek.screens.HomeScreen
 import br.com.fiap.softtek.screens.DiarioDeHumorScreen
 import br.com.fiap.softtek.screens.HistoricoScreen
+import br.com.fiap.softtek.screens.RecursosScreen
 
 @Composable
 fun AppNavigation() {
@@ -26,11 +28,13 @@ fun AppNavigation() {
             DiarioDeHumorScreen(navController)
         }
         composable("graficos") {
-            // Tela de progresso pessoal
+            DashboardScreen()
         }
         composable("historico") {
             HistoricoScreen()
         }
-
+        composable("canal") {
+            RecursosScreen()
+        }
     }
 }

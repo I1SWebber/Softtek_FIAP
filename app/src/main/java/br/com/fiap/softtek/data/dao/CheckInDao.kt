@@ -12,4 +12,10 @@ interface CheckInDao {
 
     @Query("SELECT * FROM checkin ORDER BY id DESC")
     suspend fun listarTodos(): List<CheckIn>
+
+    @Query("SELECT emoji, COUNT(*) as total FROM checkin GROUP BY emoji ORDER BY total DESC")
+    suspend fun contarPorEmoji(): List<EmojiCount>
+
+    data class EmojiCount(val emoji: String, val total: Int)
+
 }

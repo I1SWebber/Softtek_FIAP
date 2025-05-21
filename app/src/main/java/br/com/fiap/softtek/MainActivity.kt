@@ -16,6 +16,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import br.com.fiap.softtek.screens.DashboardScreen
 import br.com.fiap.softtek.util.dispararNotificacaoAgora
 
 class MainActivity : ComponentActivity() {
@@ -48,4 +49,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
