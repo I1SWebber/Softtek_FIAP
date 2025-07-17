@@ -41,5 +41,5 @@ A proposta central do app é criar um ambiente acolhedor e funcional para:
 ## 🛠 Como Rodar Localmente
 
 ```bash
-git clone https://github.com/seu-usuario/Softtek_FIAP.git
+git clone https://github.com/I1SWebber/Softtek_FIAP.git
 cd Softtek_FIAP
